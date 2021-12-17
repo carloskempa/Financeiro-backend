@@ -7,6 +7,7 @@ using Financeiro.Domain.Core.Messages;
 using Financeiro.Domain.DataTransferObjects.Filtro;
 using Financeiro.Domain.Interfaces.Queries;
 using MediatR;
+using System;
 using System.Threading.Tasks;
 
 namespace Financeiro.App.App
@@ -48,7 +49,12 @@ namespace Financeiro.App.App
 
         public async Task<TabelaMovimentacao> ObterMovimentacoes(MovimentoFilter filter, Paginacao paginacao)
         {
-            return new TabelaMovimentacao() { Data = await _movimentoQuery.MovimentoFilter(filter, paginacao) };
+            if (filter.Ano == 0 || filter.Mes == 0)
+                throw new Exception("Informe o mês e ano para filtrar as movimentaçoes");
+
+            var movimentos = await _movimentoQuery.MovimentoFilter(filter, paginacao);
+
+            return new TabelaMovimentacao() { Data = movimentos };
         }
     }
 }

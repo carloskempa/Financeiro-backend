@@ -1,5 +1,6 @@
 ﻿using Financeiro.App.Dtos.Pessoa;
 using Financeiro.App.Interfaces;
+using Financeiro.Domain.DataTransferObjects.Filtro;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -16,6 +17,13 @@ namespace FinanceiroWeb.Api.Controllers
         {
             _pessoaApp = pessoaApp;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Index([FromQuery] Paginacao paginacao)
+        {
+            return Ok(await _pessoaApp.Listar(paginacao));
+        }
+
 
         [HttpGet("{id:Guid}")]
         public async Task<IActionResult> ObterPorId([FromRoute] Guid id)

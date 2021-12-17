@@ -18,7 +18,7 @@ namespace FinanceiroWeb.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(Paginacao paginacao)
+        public async Task<IActionResult> Index([FromQuery] Paginacao paginacao)
         {
             return Ok(await _centroCustoApp.Listar(paginacao));
         }

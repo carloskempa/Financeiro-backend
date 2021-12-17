@@ -21,10 +21,19 @@ namespace FinanceiroWeb.Api.Controllers
             _movimentoApp = movimentoApp;
         }
 
+
+        //Todo: Implementar Um controlerBase para pegar as notificações de erros e nao mandar Exceptions via api
         [HttpPost("listar")]
         public async Task<IActionResult> ObterMovimentacoes([FromBody] MovimentoFilter filter, [FromQuery] Paginacao paginacao)
         {
-            return Ok(await _movimentoApp.ObterMovimentacoes(filter, paginacao));
+            try
+            {
+                return Ok(await _movimentoApp.ObterMovimentacoes(filter, paginacao));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPost]
         public async Task<IActionResult> Cadastrar([FromBody] MovimentoDto movimento)

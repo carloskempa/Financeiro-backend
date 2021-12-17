@@ -1,6 +1,8 @@
 ﻿using Financeiro.App.Dtos;
 using Financeiro.App.Interfaces;
+using Financeiro.Domain.DataTransferObjects.Filtro;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace FinanceiroWeb.Api.Controllers
@@ -16,9 +18,16 @@ namespace FinanceiroWeb.Api.Controllers
             _fornecedorApp = fornecedorApp;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index([FromQuery] Paginacao paginacao)
         {
-            return Ok("Tudo Certo");
+            return Ok(await _fornecedorApp.Listar(paginacao));
+        }
+
+        [HttpGet("{id:Guid}")]
+        public async Task<IActionResult> ObterPorId([FromRoute] Guid id)
+        {
+            return Ok(await _fornecedorApp.ObterPorId(id));
         }
 
         [HttpPost]
