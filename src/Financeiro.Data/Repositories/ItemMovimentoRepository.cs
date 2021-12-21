@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,10 +24,18 @@ namespace Financeiro.Data.Repositories
 
         public async Task<IEnumerable<ItemMovimento>> ObterItensMovimento(Guid movimentoId)
         {
-            return await _context.ItemMovimentos.Where(c => c.MovimentoId == movimentoId)
-                                                              .Include(c=>c.Pessoa)
-                                                              .Include(c=>c.CentroCusto)
-                                                              .Include(c=>c.PessoaPagador).ToListAsync();
+            return await _context.ItemMovimentos.AsNoTracking()
+                                                .Where(c => c.MovimentoId == movimentoId)
+                                                .Include(c=>c.Pessoa)
+                                                .Include(c=>c.CentroCusto)
+                                                .Include(c=>c.PessoaPagador).ToListAsync();
+        }
+
+        public async Task<IEnumerable<ItemMovimento>> Buscar(Expression<Func<ItemMovimento, bool>> predicado)
+        {
+            return await _context.ItemMovimentos.AsNoTracking()
+                                                .Where(predicado)
+                                                .ToListAsync();
         }
 
         public async Task<ItemMovimento> ObterPorId(Guid id)
@@ -53,5 +62,7 @@ namespace Financeiro.Data.Repositories
         {
             _context.Dispose();
         }
+
+       
     }
 }

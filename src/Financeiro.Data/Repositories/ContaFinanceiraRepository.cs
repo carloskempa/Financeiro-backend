@@ -35,6 +35,11 @@ namespace Financeiro.Data.Repositories
             _context.ContaFinanceiras.Update(entity);
         }
 
+        public void Deletar(ContaFinanceira entity)
+        {
+            _context.ContaFinanceiras.Remove(entity);
+        }
+
         public void Dispose()
         {
             _context.Dispose();

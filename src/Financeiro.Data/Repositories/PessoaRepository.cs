@@ -3,6 +3,9 @@ using Financeiro.Domain.Entidades;
 using Financeiro.Domain.Interfaces.Respositories;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Financeiro.Data.Repositories
@@ -34,6 +37,14 @@ namespace Financeiro.Data.Repositories
         public Task<Pessoa> ObterPorNome(string nome)
         {
             return _context.Pessoas.AsNoTracking().FirstOrDefaultAsync(c => c.Nome.ToLower() == nome.ToLower());
+        }
+
+
+        public async Task<IEnumerable<PessoaCentroCusto>> Buscar(Expression<Func<PessoaCentroCusto, bool>> predicado)
+        {
+            return await _context.PessoaCentroCustos.AsNoTracking()
+                                                    .Where(predicado)
+                                                    .ToListAsync();
         }
 
         public void Cadastrar(Pessoa entity)
@@ -76,5 +87,7 @@ namespace Financeiro.Data.Repositories
         {
             _context.Dispose();
         }
+
+       
     }
 }

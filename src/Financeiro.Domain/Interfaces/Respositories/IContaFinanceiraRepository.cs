@@ -10,5 +10,6 @@ namespace Financeiro.Domain.Interfaces.Respositories
         Task<ContaFinanceira> ObterPorId(Guid id);
         void Cadastrar(ContaFinanceira entity);
         void Atualizar(ContaFinanceira entity);
+        void Deletar(ContaFinanceira entity);
     }
 }

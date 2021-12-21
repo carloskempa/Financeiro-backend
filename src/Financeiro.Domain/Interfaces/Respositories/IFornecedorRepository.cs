@@ -11,5 +11,6 @@ namespace Financeiro.Domain.Interfaces.Respositories
         Task<Fornecedor> ObterPorNome(string nome);
         void Cadastrar(Fornecedor entity);
         void Atualizar(Fornecedor entity);
+        void Deletar(Fornecedor entity);
     }
 }

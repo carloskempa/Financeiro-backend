@@ -13,5 +13,6 @@ namespace Financeiro.App.Interfaces
         Task<RetornoPadrao<ContaFinanceiraDto>> ObterPorId(Guid id);
         Task<RetornoPadrao<ContaFinanceiraDto>> Cadastrar(ContaFinanceiraDto contaFinanceira);
         Task<RetornoPadrao<ContaFinanceiraDto>> Atualizar(ContaFinanceiraDto contaFinanceira);
+        Task<RetornoPadrao<ContaFinanceiraDto>> Deletar(Guid id);
     }
 }

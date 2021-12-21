@@ -66,5 +66,16 @@ namespace Financeiro.App.App
 
             return Sucesso(centroCustoReturn, "Centro custo atualizado com sucesso!");
         }
+
+        public async Task<RetornoPadrao<CentroCustoDto>> Deletar(Guid id)
+        {
+            var comando = new DeletarCentroCustoCommand(id);
+            await _mediatorHandler.EnviarComando(comando);
+
+            if (!OperacaoValida())
+                return Error<CentroCustoDto>(ObterMensagensErro);
+
+            return Sucesso<CentroCustoDto>("Centro custo deletado com sucesso!");
+        }
     }
 }

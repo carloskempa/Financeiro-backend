@@ -14,13 +14,19 @@ namespace Financeiro.App.Handlers
 {
     public class FornecedorCommandHandler : HandlerBase,
                                             IRequestHandler<CriarFornecedorCommand, Fornecedor>,
-                                            IRequestHandler<AtualizarFornecedorCommand, Fornecedor>
+                                            IRequestHandler<AtualizarFornecedorCommand, Fornecedor>,
+                                            IRequestHandler<DeletarFornecedorCommand, bool>
     {
         private readonly IFornecedorRepository _fornecedorRepository;
+        private readonly IMovimentoRepository _movimentoRepository;
 
-        public FornecedorCommandHandler(IMediatorHandler mediatorHandler, IFornecedorRepository fornecedorRepository) : base(mediatorHandler)
+        public FornecedorCommandHandler(IMediatorHandler mediatorHandler,
+                                        IFornecedorRepository fornecedorRepository,
+                                        IMovimentoRepository movimentoRepository)
+        : base(mediatorHandler)
         {
             _fornecedorRepository = fornecedorRepository;
+            _movimentoRepository = movimentoRepository;
         }
 
         public async Task<Fornecedor> Handle(CriarFornecedorCommand request, CancellationToken cancellationToken)
@@ -78,7 +84,36 @@ namespace Financeiro.App.Handlers
             }
         }
 
+        public async Task<bool> Handle(DeletarFornecedorCommand request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                if (!ValidarComando(request))
+                    return false;
 
+                var fornecedor = await _fornecedorRepository.ObterPorId(request.Id);
+
+                if (fornecedor == null)
+                {
+                    await AdicionarEventError(request.MessageType, "Fornecedor não encontrado.");
+                    return false;
+                }
+
+                var existeMovimentos = await ValidarSeExisteMovimentoFinanceiroVinculado(request);
+
+                if (existeMovimentos)
+                    return false;
+
+                _fornecedorRepository.Deletar(fornecedor);
+                return await Commit(_fornecedorRepository.UnitOfWork);
+
+            }
+            catch (Exception ex)
+            {
+                await TratarExeception(ex, request);
+                return false;
+            }
+        }
 
         private async Task<bool> ValidarSeExisteNomeCadastrado(string nome)
         {
@@ -96,5 +131,17 @@ namespace Financeiro.App.Handlers
             return false;
         }
 
+        private async Task<bool> ValidarSeExisteMovimentoFinanceiroVinculado(DeletarFornecedorCommand request)
+        {
+            var movimentos = await _movimentoRepository.Buscar(c => c.FornecedorId == request.Id);
+
+            if (movimentos.Any())
+            {
+                await AdicionarEventError(request.MessageType, "Fornecedor não pode ser deletado por existir movimentos financeiros vinculados.");
+                return true;
+            }
+
+            return false;
+        }
     }
 }

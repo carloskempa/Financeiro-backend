@@ -2,6 +2,7 @@
 using Financeiro.App.Interfaces;
 using Financeiro.Domain.DataTransferObjects.Filtro;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace FinanceiroWeb.Api.Controllers
@@ -17,6 +18,12 @@ namespace FinanceiroWeb.Api.Controllers
             _contaFinanceiraApp = contaFinanceiraApp;
         }
 
+        [HttpGet("{id:Guid}")]
+        public async Task<IActionResult> ObterPorId([FromRoute] Guid id)
+        {
+            return Ok(await _contaFinanceiraApp.ObterPorId(id));
+        }
+
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] Paginacao paginacao)
         {
@@ -24,15 +31,36 @@ namespace FinanceiroWeb.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Cadastrar(ContaFinanceiraDto contaFinanceira)
+        public async Task<IActionResult> Cadastrar([FromBody] ContaFinanceiraDto contaFinanceira)
         {
-            return Ok(await _contaFinanceiraApp.Cadastrar(contaFinanceira));
+            var resultado = await _contaFinanceiraApp.Cadastrar(contaFinanceira);
+
+            if (!resultado.Sucesso)
+                return BadRequest(resultado);
+
+            return Ok(resultado);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Atualizar(ContaFinanceiraDto contaFinanceira)
+        public async Task<IActionResult> Atualizar([FromBody] ContaFinanceiraDto contaFinanceira)
         {
-            return Ok(await _contaFinanceiraApp.Atualizar(contaFinanceira));
+            var resultado = await _contaFinanceiraApp.Atualizar(contaFinanceira);
+
+            if (!resultado.Sucesso)
+                return BadRequest(resultado);
+
+            return Ok(resultado);
+        }
+
+        [HttpDelete("{id:Guid}")]
+        public async Task<IActionResult> Deletar([FromRoute] Guid id)
+        {
+            var resultado = await _contaFinanceiraApp.Deletar(id);
+
+            if (!resultado.Sucesso)
+                return BadRequest(resultado);
+
+            return Ok(resultado);
         }
     }
 }

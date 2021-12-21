@@ -33,13 +33,34 @@ namespace FinanceiroWeb.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Cadastrar(FornecedorDto fornecedorDto)
         {
-            return Ok(await _fornecedorApp.Cadastrar(fornecedorDto));
+            var resultado = await _fornecedorApp.Cadastrar(fornecedorDto);
+
+            if (!resultado.Sucesso)
+                return BadRequest(resultado);
+
+            return Ok(resultado);
         }
 
         [HttpPut]
         public async Task<IActionResult> Atualizar(FornecedorDto fornecedorDto)
         {
-            return Ok(await _fornecedorApp.Atualizar(fornecedorDto));
+            var resultado = await _fornecedorApp.Atualizar(fornecedorDto);
+
+            if (!resultado.Sucesso)
+                return BadRequest(resultado);
+
+            return Ok(resultado);
+        }
+
+        [HttpDelete("{id:Guid}")]
+        public async Task<IActionResult> Deletar([FromRoute]Guid id)
+        {
+            var resultado = await _fornecedorApp.Deletar(id);
+
+            if (!resultado.Sucesso)
+                return BadRequest(resultado);
+
+            return Ok(resultado);
         }
     }
 }

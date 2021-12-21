@@ -1,6 +1,8 @@
 ﻿using Financeiro.Domain.Core.Data;
 using Financeiro.Domain.Entidades;
 using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Financeiro.Domain.Interfaces.Respositories
@@ -14,6 +16,7 @@ namespace Financeiro.Domain.Interfaces.Respositories
         void Deletar(Pessoa entity);
 
         Task<PessoaCentroCusto> ObterPorIds(Guid pessoaId, Guid centroCustoId);
+        Task<IEnumerable<PessoaCentroCusto>> Buscar(Expression<Func<PessoaCentroCusto, bool>> predicado);
         void Cadastrar(PessoaCentroCusto entity);
         void Atualizar(PessoaCentroCusto entity);
         void Deletar(PessoaCentroCusto entity);

@@ -2,6 +2,7 @@
 using Financeiro.App.Interfaces;
 using Financeiro.Domain.DataTransferObjects.Filtro;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace FinanceiroWeb.Api.Controllers
@@ -17,6 +18,12 @@ namespace FinanceiroWeb.Api.Controllers
             _centroCustoApp = centroCustoApp;
         }
 
+        [HttpGet("{id:Guid}")]
+        public async Task<IActionResult> ObterPorId([FromRoute] Guid id)
+        {
+            return Ok(await _centroCustoApp.ObterPorId(id));
+        }
+
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] Paginacao paginacao)
         {
@@ -26,13 +33,35 @@ namespace FinanceiroWeb.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Cadastrar(CentroCustoDto centroCustoDto)
         {
-            return Ok(await _centroCustoApp.Cadastrar(centroCustoDto));
+            var resultado = await _centroCustoApp.Cadastrar(centroCustoDto);
+
+            if (!resultado.Sucesso)
+                return BadRequest(resultado);
+
+            return Ok(resultado);
         }
 
         [HttpPut]
         public async Task<IActionResult> Atualizar(CentroCustoDto centroCustoDto)
         {
-            return Ok(await _centroCustoApp.Atualizar(centroCustoDto));
+            var resultado = await _centroCustoApp.Atualizar(centroCustoDto);
+
+            if (!resultado.Sucesso)
+                return BadRequest(resultado);
+
+            return Ok(resultado);
         }
+
+        [HttpDelete("{id:Guid}")]
+        public async Task<IActionResult> Deletar([FromRoute] Guid id)
+        {
+            var resultado = await _centroCustoApp.Deletar(id);
+
+            if (!resultado.Sucesso)
+                return BadRequest(resultado);
+
+            return Ok(resultado);
+        }
+
     }
 }

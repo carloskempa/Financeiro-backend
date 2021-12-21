@@ -73,6 +73,7 @@ namespace Financeiro.Infra.CrossCutting.IoC
 
             services.AddScoped<IRequestHandler<CriarCentroCustoCommand, CentroCusto>, CentroCustoCommandHandler>();
             services.AddScoped<IRequestHandler<AtualizarCentroCustoCommand, CentroCusto>, CentroCustoCommandHandler>();
+            services.AddScoped<IRequestHandler<DeletarCentroCustoCommand, bool>, CentroCustoCommandHandler>();
 
             services.AddScoped<IRequestHandler<CriarPessoaCommand, Pessoa>, PessoaCommandHandler>();
 

@@ -65,6 +65,16 @@ namespace Financeiro.App.App
 
             return Sucesso(FormecedorReturn, "Fornecedor atualizado com sucesso!");
         }
-     
+
+        public async Task<RetornoPadrao<FornecedorDto>> Deletar(Guid id)
+        {
+            var comando = new DeletarFornecedorCommand(id);
+            await _mediatorHandler.EnviarComando(comando);
+
+            if (!OperacaoValida())
+                return Error<FornecedorDto>(ObterMensagensErro);
+
+            return Sucesso<FornecedorDto>("Fornecedor deletado com sucesso!");
+        }
     }
 }

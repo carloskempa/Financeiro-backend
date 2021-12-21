@@ -64,5 +64,16 @@ namespace Financeiro.App.App
 
             return Sucesso(contaFinanceidaDto, "Conta atualizada com sucesso!");
         }
+
+        public async Task<RetornoPadrao<ContaFinanceiraDto>> Deletar(Guid id)
+        {
+            var comando = new DeletarContaFinanceiraCommand(id); 
+            await _mediatorHandler.EnviarComando(comando);
+
+            if (!OperacaoValida())
+                return Error<ContaFinanceiraDto>(ObterMensagensErro);
+
+            return Sucesso<ContaFinanceiraDto>("Conta deletado com sucesso!");
+        }
     }
 }

@@ -13,5 +13,6 @@ namespace Financeiro.App.Interfaces
         Task<RetornoPadrao<FornecedorDto>> ObterPorId(Guid id);
         Task<RetornoPadrao<FornecedorDto>> Cadastrar(FornecedorDto fornecedor);
         Task<RetornoPadrao<FornecedorDto>> Atualizar(FornecedorDto fornecedor);
+        Task<RetornoPadrao<FornecedorDto>> Deletar(Guid id);
     }
 }

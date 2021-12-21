@@ -14,5 +14,6 @@ namespace Financeiro.App.Interfaces
         Task<RetornoPadrao<CentroCustoDto>> Cadastrar(CentroCustoDto centroCusto);
         Task<RetornoPadrao<CentroCustoDto>> Atualizar(CentroCustoDto centroCusto);
         Task<PaginatedRest<CentroCusto>> Listar(Paginacao paginacao);
+        Task<RetornoPadrao<CentroCustoDto>> Deletar(Guid id);
     }
 }

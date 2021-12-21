@@ -11,5 +11,6 @@ namespace Financeiro.Domain.Interfaces.Respositories
         Task<CentroCusto> ObterPeloNome(string nome);
         void Cadastrar(CentroCusto entity);
         void Atualizar(CentroCusto entity);
+        void Deletar(CentroCusto entity);
     }
 }

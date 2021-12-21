@@ -23,6 +23,11 @@ namespace Financeiro.Data.Repositories
             return await _context.CentroCustos.FindAsync(id);
         }
 
+        public async Task<CentroCusto> ObterPeloNome(string nome)
+        {
+            return await _context.CentroCustos.AsNoTracking().FirstOrDefaultAsync(c => c.Nome.ToLower() == nome.ToLower());
+        }
+
         public void Cadastrar(CentroCusto entity)
         {
             _context.CentroCustos.Add(entity);
@@ -33,14 +38,14 @@ namespace Financeiro.Data.Repositories
             _context.CentroCustos.Update(entity);
         }
 
+        public void Deletar(CentroCusto entity)
+        {
+            _context.CentroCustos.Remove(entity);
+        }
+
         public void Dispose()
         {
             _context.Dispose();
-        }
-
-        public async Task<CentroCusto> ObterPeloNome(string nome)
-        {
-            return await _context.CentroCustos.AsNoTracking().FirstOrDefaultAsync(c => c.Nome.ToLower() == nome.ToLower());
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Financeiro.App.Commands
         {
             RuleFor(c => c.Nome).MaximumLength(CentroCusto.NOME_LENGHT).WithMessage($"O Nome não pode ter mais de {CentroCusto.NOME_LENGHT} caracteres");
             RuleFor(c => c.Nome).NotNull().NotEmpty().WithMessage("O campo Nome não pode estar vazio");
-            RuleFor(c => c.Id).NotNull().NotEmpty().WithMessage("O campo Id não pode estar vazio");
+            RuleFor(c => c.Id).NotNull().NotEmpty().GreaterThan(Guid.Empty).WithMessage("O campo Id não pode estar vazio");
         }
     }
 }

@@ -1,7 +1,11 @@
 ﻿using Financeiro.Domain.Core.Data;
 using Financeiro.Domain.Entidades;
 using Financeiro.Domain.Interfaces.Respositories;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Financeiro.Data.Repositories
@@ -16,6 +20,11 @@ namespace Financeiro.Data.Repositories
         }
 
         public IUnitOfWork UnitOfWork => _context;
+
+        public async Task<IEnumerable<Movimento>> Buscar(Expression<Func<Movimento, bool>> predicado)
+        {
+            return await _context.Movimentos.AsNoTracking().Where(predicado).ToListAsync();
+        }
 
         public async Task<Movimento> ObterPorId(Guid id)
         {
@@ -41,5 +50,7 @@ namespace Financeiro.Data.Repositories
         {
             _context.Dispose();
         }
+
+        
     }
 }

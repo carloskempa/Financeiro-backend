@@ -38,6 +38,11 @@ namespace Financeiro.Data.Repositories
             _context.Fornecedores.Update(entity);
         }
 
+        public void Deletar(Fornecedor entity)
+        {
+            _context.Fornecedores.Remove(entity);
+        }
+
         public void Dispose()
         {
             _context.Dispose();
