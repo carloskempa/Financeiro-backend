@@ -12,5 +12,6 @@ namespace Financeiro.Domain.Interfaces.Queries
     public interface IFornecedorQuery
     {
         Task<PaginatedRest<Fornecedor>> ListarTodos(Paginacao paginacao);
+        Task<IEnumerable<Fornecedor>> ListarTodos();
     }
 }

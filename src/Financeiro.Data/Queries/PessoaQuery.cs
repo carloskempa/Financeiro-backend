@@ -3,6 +3,7 @@ using Financeiro.Domain.DataTransferObjects.Filtro;
 using Financeiro.Domain.Entidades;
 using Financeiro.Domain.Interfaces.Queries;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,6 +25,11 @@ namespace Financeiro.Data.Queries
                                          .ThenInclude(centro => centro.CentroCusto)
                                          .OrderByDescending(c => c.DtCadastro)
                                          .ToPaginatedRestAsync(paginacao.Page == 0 ? 1 : paginacao.Page, paginacao.PageSize == 0 ? 10 : paginacao.PageSize);
+        }
+
+        public async Task<IEnumerable<Pessoa>> ListarTodos()
+        {
+            return await _context.Pessoas.AsNoTracking().ToListAsync();
         }
     }
 }

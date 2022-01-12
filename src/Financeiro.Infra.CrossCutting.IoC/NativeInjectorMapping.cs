@@ -67,15 +67,18 @@ namespace Financeiro.Infra.CrossCutting.IoC
 
             services.AddScoped<IRequestHandler<CriarContaFinanceiraCommand, ContaFinanceira>, ContaFinanceiraCommandHandler>();
             services.AddScoped<IRequestHandler<AtualizarContaFinanceiraCommand, ContaFinanceira>, ContaFinanceiraCommandHandler>();
+            services.AddScoped<IRequestHandler<DeletarContaFinanceiraCommand, bool>, ContaFinanceiraCommandHandler>();
 
             services.AddScoped<IRequestHandler<CriarFornecedorCommand, Fornecedor>, FornecedorCommandHandler>();
             services.AddScoped<IRequestHandler<AtualizarFornecedorCommand, Fornecedor>, FornecedorCommandHandler>();
+            services.AddScoped<IRequestHandler<DeletarFornecedorCommand, bool>, FornecedorCommandHandler>();
 
             services.AddScoped<IRequestHandler<CriarCentroCustoCommand, CentroCusto>, CentroCustoCommandHandler>();
             services.AddScoped<IRequestHandler<AtualizarCentroCustoCommand, CentroCusto>, CentroCustoCommandHandler>();
             services.AddScoped<IRequestHandler<DeletarCentroCustoCommand, bool>, CentroCustoCommandHandler>();
 
             services.AddScoped<IRequestHandler<CriarPessoaCommand, Pessoa>, PessoaCommandHandler>();
+            services.AddScoped<IRequestHandler<DeletarPessoaCommand, bool>, PessoaCommandHandler>();
 
             services.AddScoped<IRequestHandler<CriarMovimentoCommand, Movimento>, MovimentoCommandHandler>();
 

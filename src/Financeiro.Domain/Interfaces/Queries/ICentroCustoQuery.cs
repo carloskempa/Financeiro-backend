@@ -12,6 +12,7 @@ namespace Financeiro.Domain.Interfaces.Queries
     public interface ICentroCustoQuery
     {
         Task<PaginatedRest<CentroCusto>> ListarTodos(Paginacao paginacao);
+        Task<IEnumerable<CentroCusto>> ListarTodos();
 
     }
 }

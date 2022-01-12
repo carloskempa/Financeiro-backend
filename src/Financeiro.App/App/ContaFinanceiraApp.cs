@@ -11,6 +11,7 @@ using Financeiro.Domain.Interfaces.Queries;
 using Financeiro.Domain.Interfaces.Respositories;
 using MediatR;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Financeiro.App.App
@@ -74,6 +75,11 @@ namespace Financeiro.App.App
                 return Error<ContaFinanceiraDto>(ObterMensagensErro);
 
             return Sucesso<ContaFinanceiraDto>("Conta deletado com sucesso!");
+        }
+
+        public async Task<IEnumerable<ContaFinanceiraDto>> ListarTodos()
+        {
+            return _mapper.Map<IEnumerable<ContaFinanceiraDto>>(await _contaFinanceiraQuery.ListarTodos());
         }
     }
 }

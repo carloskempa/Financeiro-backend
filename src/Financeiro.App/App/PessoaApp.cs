@@ -12,6 +12,8 @@ using Financeiro.Domain.Interfaces.Queries;
 using Financeiro.Domain.Interfaces.Respositories;
 using MediatR;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Financeiro.App.App
@@ -23,7 +25,7 @@ namespace Financeiro.App.App
         public PessoaApp(IMediatorHandler mediatorHandler,
                          IMapper mapper,
                          INotificationHandler<DomainNotification> notifications,
-                         IPessoaRepository pessoRepository, 
+                         IPessoaRepository pessoRepository,
                          IPessoaQuery pessoaQuery)
         : base(mediatorHandler, mapper, notifications)
         {
@@ -42,9 +44,17 @@ namespace Financeiro.App.App
 
         }
 
-        public Task<RetornoPadrao<PessoaCadastroDto>> Atualizar(PessoaCadastroDto pessoa)
+        public async Task<RetornoPadrao<PessoaDto>> Atualizar(PessoaDto pessoa)
         {
-            throw new NotImplementedException();
+            var comando = new AtualizarPessoaCommand(pessoa.Id, pessoa.Nome, _mapper.Map<List<PessoaCentroCusto>>(pessoa.PessoaCentroCustos));
+            var resultado = await _mediatorHandler.EnviarComando(comando);
+
+            if (!OperacaoValida())
+                return Error<PessoaDto>(ObterMensagensErro);
+
+            var pessoaDto = _mapper.Map<PessoaDto>(resultado);
+
+            return Sucesso(pessoaDto, "Pessoa atualizada com sucesso");
         }
 
         public async Task<RetornoPadrao<PessoaCadastroDto>> Cadastrar(PessoaCadastroDto pessoa)
@@ -58,6 +68,22 @@ namespace Financeiro.App.App
             var pessoaDto = _mapper.Map<PessoaCadastroDto>(resultado);
 
             return Sucesso(pessoaDto, "Pessoa cadastrada com sucesso");
+        }
+
+        public async Task<RetornoPadrao<PessoaCadastroDto>> Deletar(Guid id)
+        {
+            var comando = new DeletarPessoaCommand(id);
+            await _mediatorHandler.EnviarComando(comando);
+
+            if (!OperacaoValida())
+                return Error<PessoaCadastroDto>(ObterMensagensErro);
+
+            return Sucesso<PessoaCadastroDto>("Pessoa cadastrada com sucesso");
+        }
+
+        public async Task<IEnumerable<PessoaDto>> ListarTodos()
+        {
+            return _mapper.Map<IEnumerable<PessoaDto>>(await _pessoaQuery.ListarTodos());
         }
     }
 }

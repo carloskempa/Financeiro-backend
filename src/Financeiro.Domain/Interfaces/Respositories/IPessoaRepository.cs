@@ -18,7 +18,9 @@ namespace Financeiro.Domain.Interfaces.Respositories
         Task<PessoaCentroCusto> ObterPorIds(Guid pessoaId, Guid centroCustoId);
         Task<IEnumerable<PessoaCentroCusto>> Buscar(Expression<Func<PessoaCentroCusto, bool>> predicado);
         void Cadastrar(PessoaCentroCusto entity);
+        void CadastrarRange(IEnumerable<PessoaCentroCusto> entities);
         void Atualizar(PessoaCentroCusto entity);
         void Deletar(PessoaCentroCusto entity);
+        void DeletarRangePessoaCentroCusto(IEnumerable<PessoaCentroCusto> entities);
     }
 }

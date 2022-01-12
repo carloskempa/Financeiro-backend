@@ -7,5 +7,7 @@ namespace Financeiro.App.Dtos.CentroCusto
         public Guid Id { get; set; }
         public string Nome { get; set; }
         public DateTime DtCadastro { get; set; }
+        public DateTime? DtAtualizacao { get; set; }
     }
 }
+        

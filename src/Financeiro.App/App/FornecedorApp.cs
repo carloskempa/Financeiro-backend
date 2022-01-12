@@ -11,6 +11,7 @@ using Financeiro.Domain.Interfaces.Queries;
 using Financeiro.Domain.Interfaces.Respositories;
 using MediatR;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Financeiro.App.App
@@ -75,6 +76,11 @@ namespace Financeiro.App.App
                 return Error<FornecedorDto>(ObterMensagensErro);
 
             return Sucesso<FornecedorDto>("Fornecedor deletado com sucesso!");
+        }
+
+        public async Task<IEnumerable<FornecedorDto>> ListarTodos()
+        {
+            return _mapper.Map<IEnumerable<FornecedorDto>>(await _fornecedorQuery.ListarTodos());
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Financeiro.App.Dtos
     public class TabelaMovimentacao
     {
         public PaginatedRest<Movimento> Data { get; set; }
-        public decimal TotalEntrada
+        public decimal Entrada
         {
             get
             {
@@ -20,7 +20,7 @@ namespace Financeiro.App.Dtos
             }
         }
 
-        public decimal TotalSaida
+        public decimal Saida
         {
             get
             {
@@ -33,11 +33,11 @@ namespace Financeiro.App.Dtos
             }
         }
 
-        public decimal ReceiraSaida
+        public decimal Total
         {
             get
             {
-                return TotalEntrada - TotalSaida;
+                return Entrada - Saida;
             }
         }
 

@@ -24,6 +24,11 @@ namespace FinanceiroWeb.Api.Controllers
             return Ok(await _pessoaApp.Listar(paginacao));
         }
 
+        [HttpGet("obterTodos")]
+        public async Task<IActionResult> ObterTodos()
+        {
+            return Ok(await _pessoaApp.ListarTodos());
+        }
 
         [HttpGet("{id:Guid}")]
         public async Task<IActionResult> ObterPorId([FromRoute] Guid id)
@@ -41,6 +46,18 @@ namespace FinanceiroWeb.Api.Controllers
                 return BadRequest(result);
 
             return Ok(result);
+        }
+
+
+        [HttpDelete("{id:Guid}")]
+        public async Task<IActionResult> Deletar([FromRoute] Guid id)
+        {
+            var resultado = await _pessoaApp.Deletar(id);
+
+            if (!resultado.Sucesso)
+                return BadRequest(resultado);
+
+            return Ok(resultado);
         }
     }
 }

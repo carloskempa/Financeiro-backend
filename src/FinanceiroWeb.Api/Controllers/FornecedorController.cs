@@ -30,6 +30,12 @@ namespace FinanceiroWeb.Api.Controllers
             return Ok(await _fornecedorApp.ObterPorId(id));
         }
 
+        [HttpGet("obterTodos")]
+        public async Task<IActionResult> ObterTodos()
+        {
+            return Ok(await _fornecedorApp.ListarTodos());
+        }
+
         [HttpPost]
         public async Task<IActionResult> Cadastrar(FornecedorDto fornecedorDto)
         {

@@ -23,7 +23,7 @@ namespace Financeiro.Data.Queries
         public async Task<PaginatedRest<Movimento>> MovimentoFilter(MovimentoFilter filter, Paginacao paginacao)
         {
             var query = from mov in _context.Movimentos
-                                            .Include(c => c.PessoaPagador)
+                                            .Include(c => c.Pessoa)
                                             .Include(c => c.CentroCusto)
                                             .Include(c => c.Fornecedor)
                                             .Include(c => c.Conta)

@@ -30,14 +30,16 @@ namespace FinanceiroWeb.Api.Controllers
             return Ok(await _centroCustoApp.Listar(paginacao));
         }
 
+        [HttpGet("obterTodos")]
+        public async Task<IActionResult> ObterTodos()
+        {
+            return Ok(await _centroCustoApp.ListarTodos());
+        }
+
         [HttpPost]
         public async Task<IActionResult> Cadastrar(CentroCustoDto centroCustoDto)
         {
             var resultado = await _centroCustoApp.Cadastrar(centroCustoDto);
-
-            if (!resultado.Sucesso)
-                return BadRequest(resultado);
-
             return Ok(resultado);
         }
 

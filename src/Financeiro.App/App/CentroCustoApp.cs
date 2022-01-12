@@ -12,6 +12,7 @@ using Financeiro.Domain.Interfaces.Queries;
 using Financeiro.Domain.Interfaces.Respositories;
 using MediatR;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Financeiro.App.App
@@ -76,6 +77,11 @@ namespace Financeiro.App.App
                 return Error<CentroCustoDto>(ObterMensagensErro);
 
             return Sucesso<CentroCustoDto>("Centro custo deletado com sucesso!");
+        }
+
+        public async Task<IEnumerable<CentroCustoDto>> ListarTodos()
+        {
+            return _mapper.Map<IEnumerable<CentroCustoDto>>(await _centroCustoQuery.ListarTodos());
         }
     }
 }

@@ -67,7 +67,12 @@ namespace Financeiro.Data.Repositories
         {
             _context.PessoaCentroCustos.Add(entity);
         }
-       
+
+        public void CadastrarRange(IEnumerable<PessoaCentroCusto> entities)
+        {
+            _context.PessoaCentroCustos.AddRange(entities);
+        }
+
         public void Atualizar(PessoaCentroCusto entity)
         {
             _context.PessoaCentroCustos.Update(entity);
@@ -83,11 +88,14 @@ namespace Financeiro.Data.Repositories
             return _context.PessoaCentroCustos.AsNoTracking().FirstOrDefaultAsync(c => c.PessoaId == pessoaId && c.CentroCustoId == centroCustoId);
         }
 
+        public void DeletarRangePessoaCentroCusto(IEnumerable<PessoaCentroCusto> entities)
+        {
+            _context.PessoaCentroCustos.RemoveRange(entities);
+        }
+
         public void Dispose()
         {
             _context.Dispose();
         }
-
-       
     }
 }
