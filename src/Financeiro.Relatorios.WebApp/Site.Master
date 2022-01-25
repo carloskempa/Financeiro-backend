@@ -1,0 +1,22 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Financeiro.Relatorios.WebApp.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reports Financeiro</title>
+    <link href="Styles/styles.css" rel="stylesheet" />
+</head>
+<body>
+
+    <form runat="server">
+        <asp:ScriptManager ID="scptMang_geral" runat="server"></asp:ScriptManager>
+        <div class="content-reports">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

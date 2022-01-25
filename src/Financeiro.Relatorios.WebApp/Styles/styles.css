@@ -1,0 +1,41 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+:root { --background: #f8f2f5; --red: #e52e4d; --blue: #5429cc; --blue-light: #6933FF; --text-title: #363F5F; --text-body: #969CB3; --shape: #ffffff; --green: #33cc95; }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { background: var(--background); -webkit-font-smoothing: antialiased; }
+
+body, input, textarea, button, select { font-family: 'Poppins', sans-serif; font-weight: 400; }
+
+h1, h2, h3, h4, h5, h6, strong { font-weight: 600; }
+
+
+@media (max-width: 1080px) {
+    html { font-size: 93.73%; }
+}
+
+@media (max-width: 720px) {
+    html { font-size: 87.5%; }
+}
+
+select { padding: 0 1.5rem; height: 3.2rem; border-radius: 0.25rem; border: 1px solid #d7d7d7; background: #e7e9ee; font-weight: 400; font-size: 1rem; width: 100%; }
+input[type="text"] { width: 100%; padding: 0 1.5rem; height: 2.8rem; border-radius: 0.25rem; border: 2px solid #d7d7d7; background: #e7e9ee; font-weight: 400; font-size: 1rem; }
+
+a.btn { cursor: pointer; border: 0; border-radius: 0.25rem; padding: 0.8rem 2rem; font-weight: 500; font-size: 1rem; transition: filter 0.2s; display: inline-block; text-decoration: none; }
+
+a.btn.sucesso { background-color: var(--green); color: var(--shape) }
+
+a.btn:hover { filter: brightness(0.9); }
+
+a.btn.secundario { background-color: #6c757d; border-color: #6c757d; color: var(--shape) }
+
+.content-reports { max-width: 1120px; }
+
+label { display: block; margin-top: 0.75rem; margin-bottom: 0.25rem; }
+
+.linha-col-4 { display: grid; grid-template-columns: repeat(4,1fr); grid-gap: 1rem }
+.linha-col-4 .btn-acoes {
+    display: flex;
+    align-items:end;    
+}

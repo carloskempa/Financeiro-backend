@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Financeiro.App\Financeiro.App.csproj" />
+    <ProjectReference Include="..\Financeiro.Data.Dapper\Financeiro.Data.Dapper.csproj" />
     <ProjectReference Include="..\Financeiro.Data\Financeiro.Data.csproj" />
     <ProjectReference Include="..\Financeiro.Domain.Core\Financeiro.Domain.Core.csproj" />
   </ItemGroup>

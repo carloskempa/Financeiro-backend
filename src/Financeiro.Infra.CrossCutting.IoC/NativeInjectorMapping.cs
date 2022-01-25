@@ -4,6 +4,7 @@ using Financeiro.App.Commands;
 using Financeiro.App.Handlers;
 using Financeiro.App.Interfaces;
 using Financeiro.Data;
+using Financeiro.Data.Dapper;
 using Financeiro.Data.Queries;
 using Financeiro.Data.Repositories;
 using Financeiro.Domain.Core.Communication.Mediator;
@@ -28,6 +29,7 @@ namespace Financeiro.Infra.CrossCutting.IoC
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
             services.AddSingleton(AutoMapperConfiguration.RegisterMappings().CreateMapper());
             services.AddDbContext<FinanceiroContext>(options => options.UseSqlServer(configuration.GetConnectionString("FinanceiroContext")));
+            services.AddSingleton(new DapperContext(configuration.GetConnectionString("FinanceiroContext")));
 
             RegisterServicesApplication(services);
             RegisterServicesDomain(services);
@@ -43,6 +45,7 @@ namespace Financeiro.Infra.CrossCutting.IoC
             services.AddScoped<IFornecedorQuery, FornecedorQuery>();
             services.AddScoped<ICentroCustoQuery, CentroCustoQuery>();
             services.AddScoped<IContaFinanceiraQuery, ContaFinanceiraQuery>();
+            services.AddScoped<IRelatorioQuery, RelatorioQuery>();
         }
 
         private static void RegisterServicesApplication(IServiceCollection services)
@@ -93,6 +96,7 @@ namespace Financeiro.Infra.CrossCutting.IoC
             services.AddScoped<IPessoaRepository, PessoaRepository>();
             services.AddScoped<IItemMovimentoRepository, ItemMovimentoRepository>();
             services.AddScoped<IMovimentoRepository, MovimentoRepository>();
+
         }
     }
 }
